@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Video Player</title>
+</head>
+<body>
+<div id="video"></div>
+<script type="text/javascript">
+    let videoUrl;
+
+    fetch("/api/videoUrl")
+        .then((response) => {
+            return response.json(); // JSON 형태로 변환된 응답을 반환
+        })
+        .then((data) => {
+            videoUrl = data.url; // 서버에서 받은 비디오 URL을 변수에 저장
+            let videoObject = document.getElementById("video");
+            // 동적으로 비디오 태그를 생성하여 비디오 URL을 소스로 지정
+            let video = `<video src="${videoUrl}" width="500" height="500" controls></video>`;
+            videoObject.innerHTML = video; // 생성한 비디오 태그를 페이지에 추가
+        })
+        .catch((error) => {
+            console.error('Error fetching video URL:', error); // 에러 발생 시 콘솔에 로그 출력
+        });
+</script>
+</body>
+</html>
